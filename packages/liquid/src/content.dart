@@ -11,7 +11,9 @@ Content createContent() {
 
 
 class GameContent implements Content {
-
-
+    PlayerInfo createHero(String name) {
+        var hero = new PlayerInfo(name);
+        return hero;
+    }
 
 }

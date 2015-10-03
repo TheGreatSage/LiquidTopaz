@@ -5,7 +5,7 @@ import 'package:malison/malison.dart';
 import '../engine.dart';
 import 'input.dart';
 import 'storage.dart';
-
+import 'Hero_Creation_Screen.dart';
 
 
 // TODO: Replace With TOPAZ
@@ -79,9 +79,18 @@ class MainMenuScreen extends Screen {
     return false;
   }
 
-  void activate(Screen screen, result) {
+  bool keyDown(int keyCode, {bool shift, bool alt}) {
+    if (shift || alt) return false;
 
+    switch (keyCode) {
+      case KeyCode.N:
+        ui.push(new HeroCreation(content, storage));
+        return true;
+    }
+
+    return false;
   }
+
 
   void render(Terminal terminal) {
     for (var y = 0; y < _CHARS.length; y++) {
@@ -96,12 +105,28 @@ class MainMenuScreen extends Screen {
     terminal.writeAt(0, terminal.height - 1,
     '[L] Select a hero, [?] Change selection, [N] Create a new hero, [D] Delete hero',
     Color.GRAY);
+    if (storage.heroes.length == 0) {
+      terminal.writeAt(25, 20, '(No heroes. Please create a new one.)',
+      Color.GRAY);
+    }
 
+    for (var i = 0; i < storage.heroes.length; i++) {
+      var hero = storage.heroes[i];
+
+      var fore = Color.WHITE;
+      var back = Color.BLACK;
+      if (i == selectedHero) {
+        fore = Color.BLACK;
+        back = Color.YELLOW;
+      }
+
+      terminal.writeAt(26, 20 + i, hero.name, fore, back);
+    }
 
   }
 
   void _changeSelection(int offset) {
-
+    selectedHero = (selectedHero + offset) % storage.heroes.length;
     dirty();
   }
 }

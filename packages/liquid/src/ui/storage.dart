@@ -7,7 +7,7 @@ import '../engine.dart';
 
 class Storage {
   final Content content;
-  //final List<HeroSave> heroes = <HeroSave>[];
+  final List<PlayerInfo> heroes = <PlayerInfo>[];
 
   Storage(this.content) {
     _load();
@@ -20,13 +20,26 @@ class Storage {
       return;
     }
 
+
+
     var storage = html.window.localStorage['heroes'];
     if (storage == null) return;
 
     var data = JSON.decode(storage);
+
+    for (final hero in data['heroes']) {
+      var name = hero['name'];
+      var heroSave = new PlayerInfo.load(name);
+      heroes.add(heroSave);
+    }
+
   }
   void save() {
     var heroData = [];
+    for (var hero in heroes) {
+      heroData.add({'name': hero.name});
+    }
+
     var data = {
       'heroes': heroData
     };
