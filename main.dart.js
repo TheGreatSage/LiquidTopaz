@@ -4623,21 +4623,21 @@ x.d=!0
 window.localStorage.setItem("font",z)}},
 iT:{
 "^":"d:0;",
-$1:function(a){return T.cd(1000,400,a,new T.ct("\"Courier New\"",12,15,28,1,21))}},
+$1:function(a){return T.cd(100,40,a,new T.ct("\"Courier New\"",12,15,28,1,21))}},
 iU:{
 "^":"d:0;",
-$1:function(a){return T.cd(1000,400,a,new T.ct("Menlo",12,16,28,1,21))}},
+$1:function(a){return T.cd(100,40,a,new T.ct("Menlo",12,16,28,1,21))}},
 iV:{
 "^":"d:0;",
 $1:function(a){var z=P.am()
-z=new M.cR(F.bw(1000,400),a,null,null,z,1,!1,9,16)
-z.bq(1000,400,a,"packages/malison/dos.png",16,9)
+z=new M.cR(F.bw(100,40),a,null,null,z,1,!1,9,16)
+z.bq(100,40,a,"packages/malison/dos.png",16,9)
 return z}},
 iW:{
 "^":"d:0;",
 $1:function(a){var z=P.am()
-z=new M.cR(F.bw(1000,400),a,null,null,z,1,!1,9,13)
-z.bq(1000,400,a,"packages/malison/dos-short.png",13,9)
+z=new M.cR(F.bw(100,40),a,null,null,z,1,!1,9,13)
+z.bq(100,40,a,"packages/malison/dos-short.png",13,9)
 return z}},
 iX:{
 "^":"d:0;",
