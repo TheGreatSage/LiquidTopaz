@@ -1,0 +1,9 @@
+name: liquid
+dependencies:
+  browser: any
+  barback: any
+  markdown: any
+  malison: any
+  piecemeal: any
+transformers:
+- liquid/src/markdown_to_html
