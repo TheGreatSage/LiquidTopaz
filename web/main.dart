@@ -9,8 +9,8 @@ import 'package:liquid/src/ui/input.dart';
 import 'package:liquid/src/content.dart';
 import 'package:liquid/src/ui/main_menu_screen.dart';
 
-const WIDTH = 1000;
-const HEIGHT = 400;
+const WIDTH = 100;
+const HEIGHT = 40;
 
 final terminals = [];
 var ui;
