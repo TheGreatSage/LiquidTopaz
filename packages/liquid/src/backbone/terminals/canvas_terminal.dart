@@ -25,17 +25,17 @@ class CanvasTerminal extends RenderableTerminal {
   CanvasTerminal(int width, int height, this._canvas, this._font)
       : _display = new Display(width, height) {
     _context = _canvas.context2D;
-
-    _canvas.width = _font.charWidth * width;
-    _canvas.height = _font.lineHeight * height;
-
-    // Handle high-resolution (i.e. retina) displays.
+   // Handle high-resolution (i.e. retina) displays.
     if (html.window.devicePixelRatio > 1) {
       _scale = 2;
 
-      _canvas.style.width = '${_font.charWidth * width / _scale}px';
-      _canvas.style.height = '${_font.lineHeight * height / _scale}px';
     }
+    _canvas.width = _font.charWidth * width;
+    _canvas.height = _font.lineHeight * height;
+
+
+    _canvas.style.width = '${_font.charWidth * width * _scale}px';
+    _canvas.style.height = '${_font.lineHeight * height * _scale}px';
   }
 
   void drawGlyph(int x, int y, Glyph glyph) {
@@ -43,7 +43,7 @@ class CanvasTerminal extends RenderableTerminal {
   }
 
   void render() {
-    _context.font = '${_font.size * _scale}px ${_font.family}, sans';
+    _context.font = '${_font.size * _scale}px ${_font.family}, sans-serif';
 
     _display.render((x, y, glyph) {
       var char = glyph.char;
@@ -59,6 +59,8 @@ class CanvasTerminal extends RenderableTerminal {
       _context.fillStyle = glyph.fore.cssColor;
       _context.fillText(new String.fromCharCodes([char]),
           x * _font.charWidth + _font.x, y * _font.lineHeight + _font.y);
+
+
     });
   }
 

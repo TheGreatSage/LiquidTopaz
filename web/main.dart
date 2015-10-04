@@ -33,6 +33,7 @@ addTerminal(String name, html.Element element, RenderableTerminal terminalCallba
     ui.setTerminal(terminal);
 
     // Remember the preference.
+
     html.window.localStorage['font'] = name;
   });
 
@@ -45,7 +46,19 @@ main() {
 
   addTerminal('Arial', new html.CanvasElement(),
       (element) => new CanvasTerminal(WIDTH, HEIGHT, element,
-  new Font('Arial', size: 13, w: 9, h: 13, x: 1, y: 21)));
+  new Font('Arial', size: 6, w: 9, h: 13, x: 1, y: 21)));
+
+  addTerminal('Helvetica', new html.CanvasElement(),
+      (element) => new CanvasTerminal(WIDTH, HEIGHT, element,
+  new Font('Helvetica', size: 24, w: 9, h: 13, x: 1, y: 21)));
+
+  addTerminal('Clearview', new html.CanvasElement(),
+      (element) => new CanvasTerminal(WIDTH, HEIGHT, element,
+  new Font('Clearview', size: 36, w: 9, h: 13, x: 1, y: 21)));
+
+  addTerminal('Gotham', new html.CanvasElement(),
+      (element) => new CanvasTerminal(WIDTH, HEIGHT, element,
+  new Font('Gotham', size: 48, w: 9, h: 13, x: 1, y: 21)));
 
   // Load the user's font preference, if any.
   var font = html.window.localStorage['font'];
@@ -67,6 +80,7 @@ main() {
   ui.keyBindings.bind(Input.DOWN, KeyCode.S);
 
   ui.push(new MainMenuScreen(content));
+
 
   tick(time) {
     ui.refresh();

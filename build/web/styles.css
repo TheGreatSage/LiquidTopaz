@@ -21,7 +21,7 @@ h1, h2, h3, h4 {
   font-family: Metamorphous, serif;
   color: hsl(30, 90%, 25%);
   text-shadow: hsl(45, 50%, 80%) 0 1px,
-               hsl(35, 10%, 60%) 0 -1px;
+  hsl(35, 10%, 60%) 0 -1px;
 }
 
 h1 {
@@ -46,7 +46,7 @@ p {
 }
 
 code {
-  font: 16px/16px monospace;
+  font: 16px/16px sans-serif;
   color: hsl(30, 20%, 40%);
   background: hsl(35, 10%, 66%);
   padding: 0 4px;
@@ -107,7 +107,7 @@ nav a {
 }
 
 pre {
-  font: 14px/14px monospace;
+  font: 14px/14px sans-serif;
   background-color: #000;
   letter-spacing: 1px;
   padding: 2px 4px;

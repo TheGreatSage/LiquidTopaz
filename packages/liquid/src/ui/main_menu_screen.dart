@@ -116,6 +116,7 @@ class MainMenuScreen extends Screen {
 
 
   void render(Terminal terminal) {
+
     for (var y = 0; y < _CHARS.length; y++) {
       for (var x = 0; x < _CHARS[y].length; x++) {
         var color = _COLORS[_CHAR_COLORS[y][x]];

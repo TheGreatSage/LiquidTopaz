@@ -59,7 +59,7 @@ class UserInterface {
     _render();
   }
 
-  void dirty() { _dirty = true; }
+  void dirty() { _dirty = true;}
 
   void refresh() {
     for (var screen in _screens) screen.update();
