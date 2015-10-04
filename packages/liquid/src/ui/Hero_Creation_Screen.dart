@@ -1,15 +1,10 @@
 library liquid.ui.Hero_Creation_Screen;
 
-import 'package:malison/malison.dart';
-import 'package:piecemeal/piecemeal.dart';
 
-import '../content.dart';
-import 'input.dart';
 import '../engine.dart';
-import 'storage.dart';
-import 'main_menu_screen.dart';
 
-const _DEFAULT_NAMES = const ["Sage", "Sage Martin", "Sage is God"];
+
+const _DEFAULT_NAMES = const ["Sage", "Sage Martin", "Sage is God", "Sage is The Holy Creator"];
 
 class HeroCreation extends Screen {
   final Content content;

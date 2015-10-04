@@ -1,7 +1,7 @@
 library liquid.content;
 
-import 'engine.dart';
-import 'content/tiles.dart';
+import '../engine.dart';
+import 'tiles.dart';
 
 Content createContent() {
     // Todo Fix tiles

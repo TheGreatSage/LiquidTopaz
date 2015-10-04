@@ -1,6 +1,7 @@
 library liquid.content.utils;
 
-import 'package:malison/malison.dart';
+import '../engine.dart';
+
 
 
 Glyph black(char, [Color back = Color.BLACK])       => new Glyph.fromDynamic(char, Color.BLACK, back);

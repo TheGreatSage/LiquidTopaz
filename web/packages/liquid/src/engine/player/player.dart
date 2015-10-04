@@ -1,6 +1,6 @@
 library liquid.engine.player.player;
 
-import 'package:piecemeal/piecemeal.dart';
+import '../../engine.dart';
 
 
 class PlayerInfo {

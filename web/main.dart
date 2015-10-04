@@ -2,12 +2,9 @@ library liquid.web.main;
 
 import 'dart:html' as html;
 
-import 'package:malison/malison.dart';
-import 'package:piecemeal/piecemeal.dart';
 
-import 'package:liquid/src/ui/input.dart';
-import 'package:liquid/src/content.dart';
-import 'package:liquid/src/ui/main_menu_screen.dart';
+import 'package:liquid/src/engine.dart';
+
 
 const WIDTH = 100;
 const HEIGHT = 40;
@@ -46,19 +43,9 @@ addTerminal(String name, html.Element element, RenderableTerminal terminalCallba
 main() {
   var content = createContent();
 
-  addTerminal('Courier', new html.CanvasElement(),
+  addTerminal('Arial', new html.CanvasElement(),
       (element) => new CanvasTerminal(WIDTH, HEIGHT, element,
-  new Font('"Courier New"', size: 12, w: 15, h: 28, x: 1, y: 21)));
-
-  addTerminal('Menlo', new html.CanvasElement(),
-      (element) => new CanvasTerminal(WIDTH, HEIGHT, element,
-  new Font('Menlo', size: 12, w: 16, h: 28, x: 1, y: 21)));
-
-  addTerminal('DOS', new html.CanvasElement(),
-      (element) => new RetroTerminal.dos(WIDTH, HEIGHT, element));
-
-  addTerminal('DOS Short', new html.CanvasElement(),
-      (element) => new RetroTerminal.shortDos(WIDTH, HEIGHT, element));
+  new Font('Arial', size: 13, w: 9, h: 13, x: 1, y: 21)));
 
   // Load the user's font preference, if any.
   var font = html.window.localStorage['font'];

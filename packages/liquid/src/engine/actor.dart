@@ -1,8 +1,7 @@
 library liquid.engine.actor;
 
-import 'package:piecemeal/piecemeal.dart';
-import 'game.dart';
-import 'log.dart';
+import '../engine.dart';
+
 
 abstract class Thing implements Noun {
   Vec _pos;
