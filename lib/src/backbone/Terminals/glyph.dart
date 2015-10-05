@@ -58,14 +58,9 @@ class Glyph {
   final Color  fore;
   final Color  back;
 
-  Glyph(String char, [Color fore, Color back])
-      : char = char.codeUnits[0],
-        fore = fore != null ? fore : Color.WHITE,
-        back = back != null ? back : Color.BLACK;
+  Glyph(String char, [Color fore, Color back]): char = char.codeUnits[0], fore = fore != null ? fore : Color.WHITE, back = back != null ? back : Color.BLACK;
 
-  const Glyph.fromCharCode(this.char, [Color fore, Color back])
-      : fore = fore != null ? fore : Color.WHITE,
-        back = back != null ? back : Color.BLACK;
+  const Glyph.fromCharCode(this.char, [Color fore, Color back]): fore = fore != null ? fore : Color.WHITE, back = back != null ? back : Color.BLACK;
 
   factory Glyph.fromDynamic(charOrCharCode, [Color fore, Color back]) {
     if (charOrCharCode is String) return new Glyph(charOrCharCode, fore, back);
