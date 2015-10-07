@@ -1,8 +1,8 @@
 library liquid.bb.display.terminal;
 
-import 'dart:html';
+import 'dart:html' as htm;
 
-abstract class terminal implements CanvasRenderingContext2D {
+class terminal {
   
 
 }
