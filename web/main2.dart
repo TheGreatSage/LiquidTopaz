@@ -1,51 +1,59 @@
 library liquid.testing.main2;
 import 'dart:html';
 import 'tester.dart';
-const _CHARS = const [
-  r"______   ______                          ______        _____        ",
-  r"\ .  /   \  . /                          \  . /        \ . |         ",
-  r" | .|     |. |                            |. |          | .|     ",
-  r" |. |     | .|   ___________ _____  ____  | .|   ______ |. |        ",
-  r" |:::     |::|  /:::::::::::|\:::|  \:::| |::|  /::::::\|::|            ",
-  r" |xx|     |xx|  |xx|     |xx| |xx|   |xx| |xx| /xx/     |xx|             ",
-  r" |xx|     |xx|  |xx|     |XX| |xx|   |xx| |xx| |xx|     |xx|        ",
-  r" |XX|     |XX|  |XX|     |XX| |XX\___|XX| |XX| |XXX\____|XX|          ",
-  r" |XX|    /XXXX\ \XXXXXXXXXXX| \XXXX/|XXX\/XXXX\ \XXXXXX/\XXX\         ",
-  r" |XX|  __________________|XX|______________________________________",
-  r" |XX| |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\",
-  r" |XX|                    |XX|_ ____________________",
-  r" |XX|                    |XXX/ |XXXXXXXXXXXXXXXXXX|",
-  r" |XXX\                   |XX/  |X/  /XXXXXXXX\  \x|  ",
-  r" |XXXX\\.__.//XX\\       |X/   |/      |XX|      \|",
-  r"/XXXXXXXXXXXXXXxx\\      |/            |XX|   ___________   ___________    ________ _________",
-  r"                                       |XX|  /XXXXXXXXXXX\ /XXXXXXXXXXX\   \XXXXXXX\\XXXXXXXX\",
-  r"                                       |XX|  |XX|     |XX| |XX|     |XX|  _____ \XX|  \XX\",
-  r"                                       |XX|  |XX|     |XX| |XX|     |XX| /XXXXX\|XX|    \XX\",
-  r"                                       /XX\  |XX|     |XX| |XX|     |XX||XX(____|XX|      \XX\",
-  r"                                      /XXXX\ \XXXXXXXXXXX/ |XXXXXXXXXXX/ \XXXXXX/\XX\/XXXXXXXX/           ",
-  r"                               ____________________________|XX|________________________________            ",
-  r"                              |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\                    ",
-  r"                                                           |XX|_",
-  r"                                                           |XXX/",
-  r"                                                           |XX/",
-  r"                                                           |X/",
-  r"                                                           |/",
+import '../lib/src/backbone/displays/terminal.dart';
 
-];
-class Char {
+final terminals = [];
+var ui;
 
-  final int char;
-  static const DERP = const Char.fromCharCode(0x0020);
+addTerminal(String name, Element element, herp herpp(Element element)) {
 
-  Char(String char): char = char.codeUnits[0];
-
-  const Char.fromCharCode(this.char);
+  // Make the terminal.
+  var terminal = herpp(element);
+  terminals.add([name, element, terminal]);
 
 
+  // Make a button for it.
+  var button = new ButtonElement();
+  button.innerHtml = name;
+  button.onClick.listen((_) {
+    for (var i = 0; i < terminals.length; i++) {
+      if (terminals[i][0] == name) {
+        querySelector("#game").append(terminals[i][1]);
+      } else {
+        terminals[i][1].remove();
+      }
+    }
+    terminal.render();
 
+    // Remember the preference.
+
+    window.localStorage['font'] = name;
+  });
+
+  querySelector('.button-bar').children.add(button);
+}
+
+main() {
+  addTerminal('Arial', new CanvasElement(), (element) =>     new derp(100, 40, element, new Font('Arial',    size: 13, w:9, h:13)));
+  addTerminal('Helvetica', new CanvasElement(), (element) => new derp(100, 40, element, new Font('Helvetica',size: 13, w:9, h:13)));
+  addTerminal('Clearview', new CanvasElement(), (element) => new derp(100, 40, element, new Font('Clearview',size: 13, w:9, h:13)));
+  addTerminal('Menlo', new CanvasElement(), (element) =>    new derp(100, 40, element, new Font('Menlo',   size: 13, w:9, h:13)));
+  var font = window.localStorage['font'];
+  var fontIndex = 3;
+  for (var i = 0; i < terminals.length; i++) {
+    if (terminals[i][0] == font) {
+      fontIndex = i;
+      break;
+    }
+  }
+  terminals[fontIndex][2].render();
+  querySelector("#game").append(terminals[fontIndex][1]);
 }
 
 
+
+/**
 main() {
   CanvasElement _canvas;
   CanvasRenderingContext2D _contex;
@@ -74,3 +82,5 @@ main() {
   querySelector("#game").append(_contex.canvas);
 
 }
+    **/
+
