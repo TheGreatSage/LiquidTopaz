@@ -35,10 +35,10 @@ addTerminal(String name, Element element, herp herpp(Element element)) {
 }
 
 main() {
-  addTerminal('Arial', new CanvasElement(), (element) =>     new derp(100, 40, element, new Font('Arial',    size: 13, w:9, h:13)));
-  addTerminal('Helvetica', new CanvasElement(), (element) => new derp(100, 40, element, new Font('Helvetica',size: 13, w:9, h:13)));
-  addTerminal('Clearview', new CanvasElement(), (element) => new derp(100, 40, element, new Font('Clearview',size: 13, w:9, h:13)));
-  addTerminal('Menlo', new CanvasElement(), (element) =>    new derp(100, 40, element, new Font('Menlo',   size: 13, w:9, h:13)));
+  addTerminal('Fixedsys', new CanvasElement(), (element) =>     new derp(100, 40, element, new Font('Fixedsys',    size: 13, w:9, h:13)));
+  addTerminal('Courier New', new CanvasElement(), (element) => new derp(100, 40, element, new Font('"Courier New"',size: 13, w:9, h:13)));
+  addTerminal('Fixedsys', new CanvasElement(), (element) => new derp(100, 40, element, new Font('Fixedsys',size: 13, w:9, h:13)));
+  addTerminal('Computer Modern', new CanvasElement(), (element) =>    new derp(100, 40, element, new Font('"Computer Modern"',   size: 13, w:9, h:13)));
   var font = window.localStorage['font'];
   var fontIndex = 3;
   for (var i = 0; i < terminals.length; i++) {

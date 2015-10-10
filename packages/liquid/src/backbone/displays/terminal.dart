@@ -35,7 +35,7 @@ class derp extends herp {
   htm.CanvasRenderingContext2D _contex;
 
   void render() {
-    _contex.font = '${_font.size}px ${_font.family}, sans-serif, monospace';
+    _contex.font = '${_font.size}px ${_font.family}, monospace';
     _contex.fillStyle = Color.BLACK;
     _contex.fillRect(0,0,_canvas.width,_canvas.height);
 
