@@ -41,14 +41,11 @@ class Char {
   final String textBack;
   static const DERP = const Char.fromCharCode(CharCode.SPACE);
 
-  Char(String char, [Color textColor, Color textBack]): char = char.codeUnits[0] , textColor = textColor != null ? textColor : Color.WHITE, textBack = textBack != null ? textBack : Color.BLACK;
+  Char(String char, [String textColor, String textBack]): char = char.codeUnits[0] , textColor = textColor != null ? textColor : Color.WHITE, textBack = textBack != null ? textBack : Color.BLACK;
 
-  const Char.fromCharCode(this.char, [Color textColor, Color textBack]) : textColor = textColor != null ? textColor : Color.WHITE, textBack = textBack != null ? textBack : Color.BLACK ;
+  const Char.fromCharCode(this.char, [String textColor, String textBack]) : textColor = textColor != null ? textColor : Color.WHITE, textBack = textBack != null ? textBack : Color.BLACK ;
 
-  factory Char.derp(charOrCharCode, [Color fore, Color back]) {
-    if (charOrCharCode is String) return new Char(charOrCharCode, fore, back);
-    return new Char.fromCharCode(charOrCharCode, fore, back);
-  }
+
 }
 
 

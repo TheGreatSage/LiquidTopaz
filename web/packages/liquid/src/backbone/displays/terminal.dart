@@ -2,6 +2,7 @@ library liquid.bb.display.terminal;
 
 import 'dart:html' as htm;
 import 'token.dart';
+
 abstract class Terminal {
   int get width;
   int get height;
@@ -11,6 +12,16 @@ abstract class Terminal {
       for (var x = 0; x < width; x++) {
         drawToken(x, y, Char.DERP);
       }
+    }
+  }
+
+
+  void writeAt(int x, int y, String text, [String fore, String back]) {
+    if (fore == null) fore = Color.WHITE;
+    if (back == null) back = Color.BLACK;
+    for (var i = 0; i < text.length; i++) {
+      if (x + i >= width) break;
+      drawToken(x + i, y, new Char.fromCharCode(text.codeUnits[i], fore, back));
     }
   }
 
@@ -33,10 +44,12 @@ class Font {
 }
 
 
-class derp extends Terminal {
+class NormalTerminal extends Terminal {
   final Font _font;
   final htm.CanvasElement _canvas;
   htm.CanvasRenderingContext2D _contex;
+  int get width => _font.charWidth;
+  int get height => _font.charHeight;
 
   void render() {
     _contex.font = '${_font.size}px ${_font.family}, monospace';
@@ -59,7 +72,7 @@ class derp extends Terminal {
    * Create A new Canvas
    *
    */
-  derp(int width, int height, this._canvas, this._font) {
+  NormalTerminal(int width, int height, this._canvas, this._font) {
     _contex = _canvas.context2D;
     _canvas.width = width * _font.charWidth;
     _canvas.height = height * _font.charHeight;
