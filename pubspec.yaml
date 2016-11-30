@@ -3,5 +3,6 @@ dependencies:
   browser: any
   barback: any
   markdown: any
+  quiver: '>=0.23.0<0.24.0'
 transformers:
 - liquid/src/markdown_to_html

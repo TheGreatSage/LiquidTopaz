@@ -1,17 +1,28 @@
-library liquid.bb.display.ui;
+library malison.user_interface;
 
 import 'dart:async';
-import 'dart:html' as htm;
+import 'dart:html' as html;
+
+import 'key_bindings.dart';
 import 'terminal.dart';
-import 'key_binding.dart';
 
+/// A simple modal user interface layer.
+///
+/// It maintains a stack of screens. All screens in the stack update. Screens
+/// may indicate if they are opaque or transparent. Transparent screens allow
+/// the screen under them to render.
+///
+/// In addition, the interface can define a number of global [KeyBindings]
+/// which screens can use to map raw keypresses to something higher-level.
 class UserInterface<T> {
+  /// Keyboard bindings for key press events.
   final keyPress = new KeyBindings<T>();
-  final List<Screen<T>> _screens = [];
-  NormalTerminal _terminal;
-  bool _updated = true;
 
-  StreamSubscription<htm.KeyboardEvent> _keyDownSubscription;
+  final List<Screen<T>> _screens = [];
+  RenderableTerminal _terminal;
+  bool _dirty = true;
+
+  StreamSubscription<html.KeyboardEvent> _keyDownSubscription;
 
   /// Whether or not the UI is listening for keyboard events.
   ///
@@ -21,13 +32,12 @@ class UserInterface<T> {
     if (value == handlingInput) return;
 
     if (value) {
-      _keyDownSubscription = htm.document.body.onKeyDown.listen(_keyDown);
+      _keyDownSubscription = html.document.body.onKeyDown.listen(_keyDown);
     } else {
       _keyDownSubscription.cancel();
       _keyDownSubscription = null;
     }
   }
-
 
   /// Whether or not the game loop is running and the UI is refreshing itself
   /// every frame.
@@ -44,14 +54,14 @@ class UserInterface<T> {
 
     _running = value;
     if (_running) {
-      htm.window.requestAnimationFrame(_tick);
+      html.window.requestAnimationFrame(_tick);
     }
   }
 
   UserInterface([this._terminal]);
 
-  void setTerminal(NormalTerminal terminal) {
-    _terminal=terminal;
+  void setTerminal(RenderableTerminal terminal) {
+    _terminal = terminal;
     dirty();
   }
 
@@ -85,9 +95,16 @@ class UserInterface<T> {
     _render();
   }
 
-  void dirty() {_updated=true;}
+  void dirty() {
+    _dirty = true;
+  }
 
-  void _keyDown(htm.KeyboardEvent event) {
+  void refresh() {
+    for (var screen in _screens) screen.update();
+    if (_dirty) _render();
+  }
+
+  void _keyDown(html.KeyboardEvent event) {
     var keyCode = event.keyCode;
 
     // Firefox uses 59 for semicolon.
@@ -108,18 +125,15 @@ class UserInterface<T> {
     }
   }
 
-  void refresh() {
-    for (var screen in _screens) screen.update();
-    if (_updated) _render();
-  }
-
+  /// Called every animation frame while the UI's game loop is running.
   void _tick(num time) {
     refresh();
-    if (_running) htm.window.requestAnimationFrame(_tick);
+
+    if (_running) html.window.requestAnimationFrame(_tick);
   }
 
   void _render() {
-
+    // If the UI isn't currentl bound to a terminal, there's nothing to render.
     if (_terminal == null) return;
 
     _terminal.clear();
@@ -137,13 +151,12 @@ class UserInterface<T> {
       _screens[i].render(_terminal);
     }
 
-    _updated = false;
+    _dirty = false;
     _terminal.render();
   }
 }
 
 class Screen<T> {
-
   UserInterface<T> _ui;
 
   /// The [UserInterface] this screen is bound to.

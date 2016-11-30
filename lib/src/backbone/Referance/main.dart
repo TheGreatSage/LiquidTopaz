@@ -1,27 +1,49 @@
-library liquid.testing.main2;
+import 'dart:html' as html;
 
-import 'dart:html' as htm;
-import 'tester.dart';
-import '../lib/src/engine.dart';
+import 'package:malison/malison.dart';
+import 'package:piecemeal/piecemeal.dart';
+
+import 'package:hauberk/src/content.dart';
+import 'package:hauberk/src/debug.dart';
+import 'package:hauberk/src/ui/input.dart';
+import 'package:hauberk/src/ui/main_menu_screen.dart';
+
+const width = 100;
+const height = 40;
 
 final terminals = [];
 UserInterface<Input> ui;
 
-addTerminal(String name, htm.Element element, Terminal herpp(htm.Element element)) {
+addTerminal(String name, html.Element element,
+    RenderableTerminal terminalCallback(html.Element element)) {
 
   // Make the terminal.
-  var terminal = herpp(element);
+  var terminal = terminalCallback(element);
   terminals.add([name, element, terminal]);
 
+  if (Debug.enabled) {
+    var debugBox = new html.PreElement();
+    debugBox.id = "debug";
+    html.document.body.children.add(debugBox);
 
+    var lastPos;
+    element.onMouseMove.listen((event) {
+      // TODO: This is broken now that maps scroll. :(
+      var pixel = new Vec(event.offset.x - 4, event.offset.y - 4);
+      var pos = terminal.pixelToChar(pixel);
+      var absolute = pixel + new Vec(element.offsetLeft, element.offsetTop);
+      if (pos != lastPos) debugHover(debugBox, absolute, pos);
+      lastPos = pos;
+    });
+  }
 
   // Make a button for it.
-  var button = new htm.ButtonElement();
+  var button = new html.ButtonElement();
   button.innerHtml = name;
   button.onClick.listen((_) {
     for (var i = 0; i < terminals.length; i++) {
       if (terminals[i][0] == name) {
-        htm.querySelector("#game").append(terminals[i][1]);
+        html.querySelector("#game").append(terminals[i][1]);
       } else {
         terminals[i][1].remove();
       }
@@ -29,22 +51,32 @@ addTerminal(String name, htm.Element element, Terminal herpp(htm.Element element
     ui.setTerminal(terminal);
 
     // Remember the preference.
-
-    htm.window.localStorage['font'] = name;
+    html.window.localStorage['font'] = name;
   });
 
-  htm.querySelector('.button-bar').children.add(button);
+  html.querySelector('.button-bar').children.add(button);
 }
 
 main() {
   var content = createContent();
 
-  addTerminal('Arial', new htm.CanvasElement(), (element) =>     new NormalTerminal(100, 40,  new Font('Arial',    size: 12, w:9, h:13, x:1, y:10), element));
-  addTerminal('Helvetica', new htm.CanvasElement(), (element) => new NormalTerminal(100, 40,  new Font('Helvetica',size: 12, w:9, h:13, x:1, y:10), element));
-  addTerminal('Courier', new htm.CanvasElement(), (element) => new NormalTerminal(100, 40,new Font('Courier New',  size: 12, w:9, h:13, x:1, y:10), element));
-  addTerminal('Gotham', new htm.CanvasElement(), (element) =>    new NormalTerminal(100, 40,  new Font('Gotham',   size: 12, w:9, h:13, x:1, y:10), element));
+  addTerminal('Courier', new html.CanvasElement(),
+          (element) => new CanvasTerminal(width, height,
+          new Font('"Courier New"', size: 12, w: 8, h: 14, x: 1, y: 11),
+          element));
 
-  var font = htm.window.localStorage['font'];
+  addTerminal('Menlo', new html.CanvasElement(),
+          (element) => new CanvasTerminal(width, height,
+          new Font('Menlo', size: 12, w: 8, h: 13, x: 1, y: 11), element));
+
+  addTerminal('DOS', new html.CanvasElement(),
+          (element) => new RetroTerminal.dos(width, height, element));
+
+  addTerminal('DOS Short', new html.CanvasElement(),
+          (element) => new RetroTerminal.shortDos(width, height, element));
+
+  // Load the user's font preference, if any.
+  var font = html.window.localStorage['font'];
   var fontIndex = 3;
   for (var i = 0; i < terminals.length; i++) {
     if (terminals[i][0] == font) {
@@ -53,7 +85,8 @@ main() {
     }
   }
 
-  htm.querySelector("#game").append(terminals[fontIndex][1]);
+  html.querySelector("#game").append(terminals[fontIndex][1]);
+
   ui = new UserInterface<Input>(terminals[fontIndex][2]);
 
   // Set up the keyPress.
@@ -138,23 +171,19 @@ main() {
 
   ui.push(new MainMenuScreen(content));
 
-  ui.handlingInput=true;
+  ui.handlingInput = true;
   ui.running = true;
-
 }
 
-
-void debugHover(htm.Element debugBox, Vec pixel, Vec pos) {
-  /**
+void debugHover(html.Element debugBox, Vec pixel, Vec pos) {
   var info = Debug.getMonsterInfoAt(pos);
   if (info == null) {
     debugBox.style.display = "none";
     return;
   }
-   **/
 
   debugBox.style.display = "inline-block";
   debugBox.style.left = "${pixel.x + 10}";
   debugBox.style.top = "${pixel.y}";
-  //debugBox.text = info;
+  debugBox.text = info;
 }

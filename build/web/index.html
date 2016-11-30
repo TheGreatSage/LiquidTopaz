@@ -1,38 +1,20 @@
 <html>
+
 <head>
   <title>Liquid</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
   <link href='http://fonts.googleapis.com/css?family=Buenard' rel='stylesheet' type='text/css'>
   <style>
     body {
       background: #111;
       color: #ccc;
       text-align: center;
-      font: 18px/24px Buenard, Georgia, serif;
     }
-
-    a {
-      color: hsl(30, 90%, 55%);
-    }
-
-    a:visited {
-      color: hsl(30, 90%, 45%);
-    }
-
-    a:hover {
-      color: hsl(30, 90%, 75%);
-    }
-
     canvas {
       display: inline-block;
       margin-top: 20px;
       border: solid 4px #000;
-    }
 
-    pre {
-      font: 10px/14px Arial, Helvetica, sans-serif;
-      letter-spacing: 1px;
-      width: 900px;
-      margin: 20px auto;
     }
 
     .button-bar {
@@ -59,6 +41,13 @@
     .button-bar:hover button:hover {
       color: #ccc;
       cursor: pointer;
+    }
+
+    pre {
+      font: 12px/14px Menlo, monospace;
+      letter-spacing: 1px;
+      width: 900px;
+      margin: 20px auto;
     }
 
     pre .k  { color: #000; }
@@ -126,25 +115,19 @@
     pre .bln { background-color: rgb(190, 150, 100); }
     pre .bn  { background-color: rgb(160, 110, 60); }
     pre .bdn { background-color: rgb(100, 64, 32); }
-
-    #debug {
-      position: absolute;
-      font: 10px/14px Arial, sans-serif;
-      color: #ddd;
-      background: #222;
-      padding: 5px;
-      text-align: left;
-      width: inherit;
-      margin: 0;
-      letter-spacing: 0;
-    }
   </style>
 </head>
+
 <body>
+
 <div class="button-bar">
 </div>
+
 <div id="game"></div>
-<script type="application/dart" src="main.dart"></script>
+
+<script type="application/dart" src="main2.dart"></script>
 <script src="packages/browser/dart.js"></script>
+
 </body>
+
 </html>

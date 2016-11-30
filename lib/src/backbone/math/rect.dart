@@ -42,7 +42,7 @@ import 'crud.dart' as cc;
 /// of points.
 class Rect extends IterableBase<Vec> {
   /// Gets the empty rectangle.
-  static const EMPTY = const Rect.posAndSize(Vec.ZERO, Vec.ZERO);
+  static const empty = const Rect.posAndSize(Vec.zero, Vec.zero);
 
   /// Creates a new rectangle that is the intersection of [a] and [b].
   ///
@@ -119,10 +119,13 @@ class Rect extends IterableBase<Vec> {
 
   Rect inflate(int distance) {
     return new Rect(x - distance, y - distance,
-      width + (distance * 2), height + (distance * 2));
+        width + (distance * 2), height + (distance * 2));
   }
 
-  bool contains(Vec point) {
+  bool contains(Object object) {
+    if (object is! Vec) return false;
+
+    var point = object as Vec;
     if (point.x < pos.x) return false;
     if (point.x >= pos.x + size.x) return false;
     if (point.y < pos.y) return false;
@@ -143,8 +146,8 @@ class Rect extends IterableBase<Vec> {
   /// Returns a new [Vec] that is as near to [vec] as possible while being in
   /// bounds.
   Vec clamp(Vec vec) {
-    var x = cc.clamp(left, vec.x, right);
-    var y = cc.clamp(top, vec.y, bottom);
+    var x = vec.x.clamp(left, right);
+    var y = vec.y.clamp(top, bottom);
     return new Vec(x, y);
   }
 
@@ -210,7 +213,7 @@ class Rect extends IterableBase<Vec> {
     return const <Vec>[];
   }
 
-  // TODO: Equality operator and hashCode.
+// TODO: Equality operator and hashCode.
 }
 
 class RectIterator implements Iterator<Vec> {
@@ -232,7 +235,7 @@ class RectIterator implements Iterator<Vec> {
       _y++;
     }
 
-   return  _y < _rect.bottom;
+    return  _y < _rect.bottom;
   }
 }
 

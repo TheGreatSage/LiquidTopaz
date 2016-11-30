@@ -1,6 +1,7 @@
 # LiquidTopaz
 
 This is a early work in progress game/game engine for [Dart][]. The Main focus is on the development of RougeLike games.
+A lot of the code is probably pretty bad but oh well.
 
 ## Credits
 
