@@ -3,6 +3,7 @@ library liquid.ui.main_menu_screen;
 import '../engine.dart';
 import 'confirm_dialog.dart';
 import 'new_hero_screen.dart';
+import 'game_screen.dart';
 
 // TODO: Replace With TOPAZ
 
@@ -92,7 +93,8 @@ class MainMenuScreen extends Screen<Input> {
       case Input.s: _changeSelection(1); return true;
       case Input.ok:
         if (selectedHero < storage.heroes.length) {
-          //ui.push(new SelectLevelScreen(content, storage.heroes[selectedHero], storage));
+          var game = new Game(content, storage);
+          ui.push(new GameScreen(game));
         }
         return true;
     }

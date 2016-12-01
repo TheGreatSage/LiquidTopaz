@@ -32,7 +32,7 @@ abstract class Thing implements Noun {
 
   get appearance;
   String get nounText;
-  Pronoun get pronoun => Pronoun.IT;
+  Pronoun get pronoun => Pronoun.it;
 
   String toString() => nounText;
 }
@@ -65,6 +65,16 @@ class Actor implements Thing {
   void changePosition(Vec from, Vec to) {
     to == from;
   }
+
+  /// Get an [Attack] for this [Actor] to attempt to hit [defender].
+  Attack getAttack(Actor defender) {
+    var attack = onGetAttack(defender);
+
+
+    return attack;
+  }
+
+  onGetAttack(Actor defender);
 
   noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }

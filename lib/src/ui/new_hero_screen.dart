@@ -34,10 +34,11 @@ class NewHeroScreen extends Screen<Input> {
       case KeyCode.enter:
       // TODO: Other classes.
         //var heroClass = new Warrior();
-        //var hero = content.createHero(name.isEmpty ? defaultName : name, heroClass);
-        //storage.heroes.add(hero);
+        var hero = content.createHero(name.isEmpty ? defaultName : name);
+        storage.heroes.add(hero);
         storage.save();
-        ui.goTo(new GameScreen(content, storage));
+        var game = new Game(content, storage);
+        ui.goTo(new GameScreen(game));
         break;
 
       case KeyCode.escape:

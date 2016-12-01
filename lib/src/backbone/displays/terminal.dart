@@ -40,7 +40,10 @@ abstract class Terminal {
   void render();
   Vec pixelToChar(Vec pixel);
 
-
+  Terminal rect(int x, int y, int width, int height) {
+    // TODO: Bounds check.
+    return new PortTerminal(x, y, new Vec(width, height), this);
+  }
 
 
 }
@@ -134,4 +137,45 @@ class NormalTerminal extends Terminal {
       new Vec(pixel.x ~/ _font.charWidth, pixel.y ~/ _font.charHeight);
 
 
+}
+
+
+/// A terminal that draws to a window within another parent terminal.
+class PortTerminal extends Terminal {
+  int get width => size.x;
+  int get height => size.y;
+  final Vec size;
+
+  final int _x;
+  final int _y;
+  final Terminal _root;
+
+  PortTerminal(this._x, this._y, this.size, this._root);
+
+  void drawToken(int x, int y, Char char) {
+    if (x < 0) return;
+    if (x >= width) return;
+    if (y < 0) return;
+    if (y >= height) return;
+
+    _root.drawToken(_x + x, _y + y, char);
+  }
+
+  Terminal rect(int x, int y, int width, int height) {
+    // TODO: Bounds check.
+    // Overridden so we can flatten out nested PortTerminals.
+    return new PortTerminal(_x + x, _y + y, new Vec(width, height), _root);
+  }
+
+
+  @override
+  // ignore: missing_return
+  Vec pixelToChar(Vec pixel) {
+    // TODO: implement pixelToChar
+  }
+
+  @override
+  void render() {
+    // TODO: implement render
+  }
 }

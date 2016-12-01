@@ -14,6 +14,7 @@ export 'engine/actor.dart';
 export 'engine/game.dart';
 export 'engine/player/player.dart';
 export 'engine/monster.dart';
+export 'engine/attack.dart';
 //AI
 export 'engine/ai/move.dart';
 export 'engine/ai/pathfind.dart';
@@ -22,3 +23,6 @@ export 'content/content.dart';
 export 'content/utils.dart';
 //Debug
 export 'debug.dart';
+//Actions
+export 'engine/actions/action.dart';
+export 'engine/actions/attack.dart';
